@@ -116,7 +116,7 @@ module.exports = {
       }
     }
   },
-  publicPath: isProd ? '/vue3.0/' : '/',
+  publicPath: isProd ? '/Antd-Vue-Admin/' : '/',
   outputDir: 'dist',
   assetsDir: 'static',
   productionSourceMap: false
