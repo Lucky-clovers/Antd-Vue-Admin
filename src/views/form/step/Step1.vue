@@ -27,7 +27,6 @@
     <a-form-item :wrapperCol="{span: 17, offset: 7}">
       <a-button type="primary" @click="nextStep">{{$t('nextStep')}}</a-button>
     </a-form-item>
-
   </a-form>
 
 </template>

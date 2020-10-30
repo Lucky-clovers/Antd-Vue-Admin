@@ -14,11 +14,17 @@
 
   export default {
     components: { WangEditor },
+    i18n: require('./i18n'),
     data() {
       return {
         isClear: false,
         detail: ""
       };
+    },
+    computed: {
+      desc () {
+        return this.$t('pageDesc')
+      }
     },
     methods: {
       change(val) {

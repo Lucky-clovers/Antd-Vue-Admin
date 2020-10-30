@@ -9,6 +9,7 @@
 
 <script>
   import E from 'wangeditor'
+  import {uploadImage} from '@/services/upload'
   export default {
     name: 'WangEditor',
     data() {
@@ -89,37 +90,22 @@
           'redo', // 重复
           'fullscreen' // 全屏
         ]
+        this.editor.customConfig.customUploadImg = function (files, insert) {
+          // files 是 input 中选中的文件列表
+          // insert 是获取图片 url 后，插入到编辑器的方法
 
-        this.editor.customConfig.uploadImgHooks = {
-          fail: (xhr, editor, result) => {
-            // 插入图片失败回调
-            console.log(' 插入图片失败回调')
-          },
-          success: (xhr, editor, result) => {
-            console.log("图片上传成功回调")
-            // 图片上传成功回调
-          },
-          timeout: (xhr, editor) => {
-            // 网络超时的回调
-          },
-          error: (xhr, editor) => {
-            // 图片上传错误的回调
-          },
-          customInsert: (insertImg, result, editor) => {
 
-            // 图片上传成功，插入图片的回调
-            //result为上传图片成功的时候返回的数据，这里我打印了一下发现后台返回的是data：[{url:"路径的形式"},...]
-            // console.log(result.data[0].url)
-            //insertImg()为插入图片的函数
-            //循环插入图片
-            // for (let i = 0; i < 1; i++) {
-            // console.log(result)
-             let url =  process.env.VUE_APP_API_BASE_IMAGES_URL  + result.url
-             console.log(url)
-              insertImg(url)
-            // }
-          }
-        }
+          uploadImage(files).then(data=>{
+            // 上传代码返回结果之后，将图片插入到编辑器中
+            let url =  process.env.VUE_APP_API_BASE_IMAGES_URL  + data.data.url
+            insert(url)
+
+          }).catch(err=>{
+
+          })
+
+        },
+
         this.editor.customConfig.onchange = (html) => {
           this.info_ = html // 绑定当前逐渐地值
           this.$emit('change', this.info_) // 将内容同步到父组件中
